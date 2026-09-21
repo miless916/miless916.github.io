@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mnaerial | Aerial photography and video</title>
+<meta name="description" content="Aerial photography and video shot by drone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAFBFC; --ink:#16212B; --muted:#66727E; --line:#DDE3E8; --tile:#E9EEF2; --accent:#2F5D8A;
+  --max:1120px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font:400 17px/1.6 "Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header{position:sticky;top:0;background:rgba(250,251,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.logo{font-weight:600;font-size:20px;letter-spacing:.04em;text-decoration:none}
+nav{display:flex;gap:28px}
+nav a{text-decoration:none;color:var(--muted);font-size:15px}
+nav a:hover{color:var(--ink)}
+
+.hero{padding:88px 0 40px}
+.hero h1{font-weight:500;font-size:clamp(38px,6.5vw,72px);line-height:1.05;letter-spacing:-.02em;max-width:14ch}
+.hero p{margin-top:20px;color:var(--muted);max-width:46ch;font-size:19px}
+.cover{margin-top:48px;aspect-ratio:21/9;border-radius:4px;background:var(--tile) center/cover no-repeat;background-image:url("images/hero.jpg")}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-weight:500;font-size:30px;letter-spacing:-.01em;margin-bottom:8px}
+.sub{color:var(--muted);margin-bottom:36px}
+
+.trip{margin-top:56px}
+.trip:first-of-type{margin-top:0}
+.trip-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 24px;margin-bottom:16px}
+.trip h3{font-weight:500;font-size:21px}
+.trip .meta{color:var(--muted);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid figure{aspect-ratio:3/2;background:var(--tile);border-radius:3px;overflow:hidden}
+.grid button{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.grid img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+.grid button:hover img{opacity:.88}
+
+.videos{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.video .frame{position:relative;aspect-ratio:16/9;background:var(--tile);border-radius:3px;overflow:hidden}
+.video .frame button{all:unset;position:absolute;inset:0;cursor:pointer}
+.video .frame img{width:100%;height:100%;object-fit:cover}
+.video .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center}
+.play::after{content:"";border-left:16px solid var(--accent);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.video h3{font-weight:500;font-size:18px;margin-top:12px}
+.video p{color:var(--muted);font-size:15px}
+
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.about p+p{margin-top:16px}
+.about .facts{color:var(--muted);font-size:15px}
+.contact a.big{font-size:clamp(22px,4vw,34px);text-decoration:none;border-bottom:1px solid var(--line)}
+.contact a.big:hover{border-color:var(--accent);color:var(--accent)}
+.links{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}
+.links a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.links a:hover{color:var(--ink)}
+footer{padding:28px 0 48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+
+dialog{border:0;background:transparent;max-width:100vw;max-height:100vh;width:100%;height:100%;padding:0}
+dialog::backdrop{background:rgba(14,20,26,.92)}
+.lb{display:grid;grid-template-rows:1fr auto;height:100%;padding:24px;gap:12px;justify-items:center}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;align-self:center;min-height:0}
+.lb-cap{color:#dfe6ec;font-size:15px}
+.lb button{position:fixed;background:none;border:0;color:#fff;font-size:34px;line-height:1;padding:14px;cursor:pointer}
+.lb .x{top:8px;right:12px}.lb .p{left:8px;top:50%}.lb .n{right:8px;top:50%}
+
+@media (max-width:760px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .videos,.about{grid-template-columns:1fr}
+  .about{gap:24px}
+  nav{gap:18px}
+  .hero{padding-top:56px}
+  .cover{aspect-ratio:4/3}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">mnaerial</a>
+    <nav aria-label="Main">
+      <a href="#photos">Photos</a>
+      <a href="#video">Video</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <h1>Aerial photography and video.</h1>
+    <p>Landscapes and places seen from above, shot by drone.</p>
+    <div class="cover" role="img" aria-label="Featured aerial photo"></div>
+  </div>
+
+  <section id="photos">
+    <div class="wrap">
+      <h2>Photos</h2>
+      <p class="sub">Grouped by trip and location.</p>
+      <div id="trips"></div>
+    </div>
+  </section>
+
+  <section id="video">
+    <div class="wrap">
+      <h2>Video</h2>
+      <p class="sub">Select a clip to play it.</p>
+      <div class="videos" id="videos"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <h2>About</h2>
+      </div>
+      <div>
+        <p>Hi, I'm Miles. I fly a DJI Mini 5 Pro and photograph the places I travel to from the air.</p>
+        <p>Add a couple of sentences here about what you like to shoot and where you're based.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="sub">For prints, licensing, or collaborations.</p>
+      <a class="big" href="mailto:you@example.com">you@example.com</a>
+      <div class="links">
+        <a href="https://www.instagram.com/" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">&copy; <span id="yr"></span> mnaerial. All photos and video are my own.</div></footer>
+
+<dialog id="lb" aria-label="Photo viewer">
+  <div class="lb">
+    <button class="x" aria-label="Close">&times;</button>
+    <button class="p" aria-label="Previous photo">&#8249;</button>
+    <button class="n" aria-label="Next photo">&#8250;</button>
+    <img alt="">
+    <div class="lb-cap"></div>
+  </div>
+</dialog>
+
+<script>
+/* ============ EDIT THIS SECTION ============
+   Photos: put web-sized JPEGs in an /images folder (about 2000px wide, under 500 KB each).
+   Each photo is [file path, caption]. Add or remove trips and photos freely.
+   Optional homepage image: images/hero.jpg
+   Videos: paste the ID from a YouTube link (youtube.com/watch?v=THIS_PART). */
+const TRIPS = [
+  { name: "First trip name", place: "Location, Country", date: "Month Year", photos: [
+    ["images/trip1-01.jpg", "Caption"], ["images/trip1-02.jpg", "Caption"], ["images/trip1-03.jpg", "Caption"],
+    ["images/trip1-04.jpg", "Caption"], ["images/trip1-05.jpg", "Caption"], ["images/trip1-06.jpg", "Caption"]
+  ]},
+  { name: "Second trip name", place: "Location, Country", date: "Month Year", photos: [
+    ["images/trip2-01.jpg", "Caption"], ["images/trip2-02.jpg", "Caption"], ["images/trip2-03.jpg", "Caption"]
+  ]}
+];
+const VIDEOS = [
+  { id: "YOUR_VIDEO_ID", title: "Video title", note: "Location, Month Year" },
+  { id: "YOUR_VIDEO_ID", title: "Video title", note: "Location, Month Year" }
+];
+/* ============================================ */
+
+const el = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h) e.innerHTML = h; return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* Photos */
+const all = [];
+const tripsEl = document.getElementById('trips');
+TRIPS.forEach(t => {
+  const s = el('div', 'trip');
+  s.append(el('div', 'trip-head', `<h3>${esc(t.name)}</h3><span class="meta">${esc(t.place)}, ${esc(t.date)}</span>`));
+  const g = el('div', 'grid');
+  t.photos.forEach(([src, cap]) => {
+    const i = all.push({ src, cap: `${t.name}. ${cap}` }) - 1;
+    const f = el('figure');
+    const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'View photo: ' + cap);
+    const im = new Image(); im.src = src; im.alt = cap; im.loading = 'lazy'; im.decoding = 'async';
+    im.onerror = () => im.remove();
+    b.append(im); b.onclick = () => open(i); f.append(b); g.append(f);
+  });
+  s.append(g); tripsEl.append(s);
+});
+
+/* Lightbox */
+const lb = document.getElementById('lb'), lbi = lb.querySelector('img'), lbc = lb.querySelector('.lb-cap');
+let cur = 0;
+function show(i) { cur = (i + all.length) % all.length; lbi.src = all[cur].src; lbi.alt = all[cur].cap; lbc.textContent = all[cur].cap; }
+function open(i) { show(i); lb.showModal(); }
+lb.querySelector('.x').onclick = () => lb.close();
+lb.querySelector('.p').onclick = () => show(cur - 1);
+lb.querySelector('.n').onclick = () => show(cur + 1);
+lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb')) lb.close(); });
+
+/* Videos (YouTube loads only when clicked) */
+const vEl = document.getElementById('videos');
+VIDEOS.forEach(v => {
+  const w = el('div', 'video'), fr = el('div', 'frame');
+  if (v.id !== 'YOUR_VIDEO_ID') {
+    const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Play ' + v.title);
+    b.innerHTML = `<img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="" loading="lazy"><span class="play"></span>`;
+    b.onclick = () => { fr.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${esc(v.id)}?autoplay=1&rel=0" title="${esc(v.title)}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`; };
+    fr.append(b);
+  }
+  w.append(fr, el('h3', '', esc(v.title)), el('p', '', esc(v.note)));
+  vEl.append(w);
+});
+</script>
+</body>
+</html>
